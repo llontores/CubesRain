@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
@@ -12,7 +11,6 @@ public class Cube : MonoBehaviour
 
     private Renderer _renderer;
     private float _lifeTime;
-    private Coroutine _destroyAfterTimeJob;
     private int _countPlatformTouches = 0;
 
     private void Start()
@@ -38,7 +36,7 @@ public class Cube : MonoBehaviour
     private void SetLifeTime()
     {
         _lifeTime = Random.Range(_minLifeTime, _maxLifeTime);
-        _destroyAfterTimeJob = StartCoroutine(DestroyAfterTime());
+        StartCoroutine(DestroyAfterTime());
     }
 
     private IEnumerator DestroyAfterTime()

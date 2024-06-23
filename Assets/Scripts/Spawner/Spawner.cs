@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Spawner : ObjectPool
 {
@@ -12,12 +10,11 @@ public class Spawner : ObjectPool
     [SerializeField] private float _minYOffset;
     [SerializeField] private float _maxYOffset;
 
-    private Coroutine _spawnCubesJob;
 
     private void Start()
     {
         Initialize(_cubePrefab);
-        _spawnCubesJob = StartCoroutine(SpawnCubes());
+        StartCoroutine(SpawnCubes());
     }
 
     private IEnumerator SpawnCubes()

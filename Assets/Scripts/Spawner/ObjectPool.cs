@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -12,7 +11,6 @@ public class ObjectPool : MonoBehaviour
 
     protected void Initialize(Cube prefab)
     {
-
         for (int i = 0; i < _amount; i++)
         {
             Cube spawned = Instantiate(prefab, _container);
@@ -21,10 +19,10 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    protected bool TryGetObject(out Cube result)
+    protected bool TryGetObject(out Cube unactiveCube)
     {
-        result = _pool.FirstOrDefault(p => p.gameObject.activeSelf == false);
+        unactiveCube = _pool.FirstOrDefault(p => p.gameObject.activeSelf == false);
 
-        return result != null;
+        return unactiveCube != null;
     }
 }
