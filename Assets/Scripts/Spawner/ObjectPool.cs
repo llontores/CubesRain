@@ -7,22 +7,33 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] private Transform _container;
     [SerializeField] private int _amount;
 
-    private List<Cube> _pool = new List<Cube>();
+    private Queue<Cube> _pool = new Queue<Cube>();
+    private Cube _prefab;
 
-    protected void Initialize(Cube prefab)
+    private void OnDisable()
     {
-        for (int i = 0; i < _amount; i++)
-        {
-            Cube spawned = Instantiate(prefab, _container);
-            spawned.gameObject.SetActive(false);
-            _pool.Add(spawned);
-        }
+        foreach (Cube cube in _pool)
+            cube.Disabled -= EnqueueCube;
     }
 
-    protected bool TryGetObject(out Cube unactiveCube)
+    protected void Initialize(Cube cube)
     {
-        unactiveCube = _pool.FirstOrDefault(p => p.gameObject.activeSelf == false);
+        _prefab = cube;
+    }
 
-        return unactiveCube != null;
+    protected void TryGetObject(out Cube unactiveCube)
+    {
+        if(_pool.Count == 0)
+        {
+            Cube cube = Instantiate(_prefab, _container);
+            _pool.Enqueue(cube);
+            cube.Disabled += EnqueueCube;
+        }
+        unactiveCube = _pool.Dequeue();
+    }
+
+    private void EnqueueCube(Cube cube)
+    {
+        _pool.Enqueue(cube);
     }
 }

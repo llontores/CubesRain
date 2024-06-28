@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Renderer))]
 public class Cube : MonoBehaviour
@@ -9,9 +10,16 @@ public class Cube : MonoBehaviour
     [SerializeField] private float _maxLifeTime;
     [SerializeField] private float _minLifeTime;
 
+    public event UnityAction<Cube> Disabled;
+
     private Renderer _renderer;
     private float _lifeTime;
     private int _countPlatformTouches = 0;
+
+    private void OnDisable()
+    {
+        Disabled?.Invoke(this);
+    }
 
     private void Start()
     {
