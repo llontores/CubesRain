@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Spawner : ObjectPool
+public class CubesSpawner : ObjectPool
 {
     [SerializeField] private Cube _prefab;
     [SerializeField] private float _dalay;
