@@ -34,7 +34,6 @@ public class Bomb : MonoBehaviour, IDisableable<Bomb>
 
     public void SetLifeTime(float time)
     {
-        print(time);
         _lifeTime = time;
         StartCoroutine(DestroyAfterTime());
     }
