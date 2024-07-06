@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombsSpawner : MonoBehaviour
+public class BombsSpawner : ObjectPool<Bomb>
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Bomb _bombPrefab;
+
+    private void Start()
     {
-        
+        Initialize(_bombPrefab);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SubcribeOnCube(Cube cube)
     {
-        
+        cube.Disabled += SpawnBomb;
+    }
+
+    private void SpawnBomb(Cube cube)
+    {
+        Bomb resourse;
+        TryGetObject(out resourse);
+        resourse.transform.position = cube.transform.position;
+        resourse.gameObject.SetActive(true);
+        resourse.SetLifeTime(cube.LifeTime);
+        cube.Disabled -= SpawnBomb;
     }
 }

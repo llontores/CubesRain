@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Renderer))]
-public class Cube : MonoBehaviour
+public class Cube : MonoBehaviour, IDisableable<Cube>
 {
     [SerializeField] private Material _startMaterial;
     [SerializeField] private Material _materialToChange;
@@ -11,6 +11,7 @@ public class Cube : MonoBehaviour
     [SerializeField] private float _minLifeTime;
 
     public event UnityAction<Cube> Disabled;
+    public float LifeTime => _lifeTime;
 
     private Renderer _renderer;
     private float _lifeTime;
