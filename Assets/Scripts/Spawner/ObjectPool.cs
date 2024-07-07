@@ -16,8 +16,8 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour, IDisableable
 
     private void OnDisable()
     {
-        foreach (T gameObject in _pool)
-            gameObject.Disabled -= EnqueueGameObject;
+        foreach (T objectsInPool in _pool)
+            objectsInPool.Disabled -= EnqueueGameObject;
     }
 
     protected void Initialize(T prefab)
@@ -25,7 +25,7 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour, IDisableable
         _prefab = prefab;
     }
 
-    protected void TryGetObject(out T unactiveObject)
+    protected void GetObject(out T unactiveObject)
     {
         if (_pool.Count == 0)
         {
@@ -34,8 +34,8 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour, IDisableable
             gameObject.Disabled += EnqueueGameObject;
             _everSpawnedObjectsCounter++;
             _everSpawnedText.text = Convert.ToString(_everSpawnedObjectsCounter);
-            
         }
+
         unactiveObject = _pool.Dequeue();
         _activeObjectCount++;
         _activeObjectsText.text = Convert.ToString(_activeObjectCount);
@@ -46,6 +46,5 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour, IDisableable
         _pool.Enqueue(t);
         _activeObjectCount--;
         _activeObjectsText.text = Convert.ToString(_activeObjectCount);
-
     }
 }

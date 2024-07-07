@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BombsSpawner : ObjectPool<Bomb>
@@ -19,7 +17,7 @@ public class BombsSpawner : ObjectPool<Bomb>
     private void SpawnBomb(Cube cube)
     {
         Bomb resourse;
-        TryGetObject(out resourse);
+        GetObject(out resourse);
         resourse.transform.position = cube.transform.position;
         resourse.gameObject.SetActive(true);
         resourse.SetLifeTime(cube.LifeTime);

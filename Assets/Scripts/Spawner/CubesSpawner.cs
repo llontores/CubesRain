@@ -24,7 +24,7 @@ public class CubesSpawner : ObjectPool<Cube>
 
         while (true)
         {
-            TryGetObject(out resource);
+            GetObject(out resource);
             resource.gameObject.transform.position = new Vector3(Random.Range(transform.position.x - _minXOffset, transform.position.x + _maxXOffset),
                 Random.Range(transform.position.y - _minYOffset, transform.position.y + _maxYOffset), transform.position.z);
             resource.gameObject.SetActive(true);

@@ -30,9 +30,9 @@ public class Cube : MonoBehaviour, IDisableable<Cube>
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.TryGetComponent(out Platform platform))
+        if (_countPlatformTouches == 0)
         {
-            if (_countPlatformTouches == 0)
+            if (collision.collider.TryGetComponent(out Platform platform))
             {
                 _renderer.material = _materialToChange;
                 SetLifeTime();
@@ -50,8 +50,7 @@ public class Cube : MonoBehaviour, IDisableable<Cube>
 
     private IEnumerator DestroyAfterTime()
     {
-        WaitForSeconds lifeTime = new WaitForSeconds(_lifeTime);
-        yield return lifeTime;
+        yield return _lifeTime;
         gameObject.SetActive(false);
         _renderer.material = _startMaterial;
         _countPlatformTouches = 0;

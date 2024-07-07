@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -55,7 +54,6 @@ public class Bomb : MonoBehaviour, IDisableable<Bomb>
         Explode();
         gameObject.SetActive(false);
     }
-
 
     private void Explode()
     {
