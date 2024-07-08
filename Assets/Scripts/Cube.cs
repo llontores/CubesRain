@@ -30,27 +30,30 @@ public class Cube : MonoBehaviour, IDisableable<Cube>
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.collider.TryGetComponent(out Platform platform))
+            TrySetLifeTime();
+    }
+
+    private void TrySetLifeTime()
+    {
         if (_countPlatformTouches == 0)
         {
-            if (collision.collider.TryGetComponent(out Platform platform))
-            {
-                _renderer.material = _materialToChange;
-                SetLifeTime();
-            }
-
-            _countPlatformTouches++;
+            _renderer.material = _materialToChange;
+            SetLifeTime();
         }
+        _countPlatformTouches++;
     }
 
     private void SetLifeTime()
     {
         _lifeTime = Random.Range(_minLifeTime, _maxLifeTime);
+        print(_lifeTime);
         StartCoroutine(DestroyAfterTime());
     }
 
     private IEnumerator DestroyAfterTime()
     {
-        yield return _lifeTime;
+        yield return new WaitForSeconds(_lifeTime);
         gameObject.SetActive(false);
         _renderer.material = _startMaterial;
         _countPlatformTouches = 0;

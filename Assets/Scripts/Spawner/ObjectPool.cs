@@ -25,7 +25,7 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour, IDisableable
         _prefab = prefab;
     }
 
-    protected void GetObject(out T unactiveObject)
+    protected T GetObject()
     {
         if (_pool.Count == 0)
         {
@@ -36,9 +36,9 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour, IDisableable
             _everSpawnedText.text = Convert.ToString(_everSpawnedObjectsCounter);
         }
 
-        unactiveObject = _pool.Dequeue();
         _activeObjectCount++;
         _activeObjectsText.text = Convert.ToString(_activeObjectCount);
+        return _pool.Dequeue();
     }
 
     private void EnqueueGameObject(T t)

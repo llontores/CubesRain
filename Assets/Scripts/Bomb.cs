@@ -61,9 +61,7 @@ public class Bomb : MonoBehaviour, IDisableable<Bomb>
 
         foreach (Collider explodableObject in explodableObjects)
         {
-            Rigidbody rigidBody = explodableObject.GetComponent<Rigidbody>();
-
-            if (rigidBody != null)
+            if (explodableObject.TryGetComponent<Rigidbody>(out Rigidbody rigidBody))
                 rigidBody.AddExplosionForce(_explosionForce, transform.position, _explosionRadius);
         }
     }
